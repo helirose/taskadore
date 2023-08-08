@@ -1,8 +1,11 @@
 <script setup>
-import { reactive } from 'vue';
+import { ref, reactive } from 'vue';
 import Task from './components/Task.vue';
 import NewTask from './components/NewTask.vue';
 import Timer from './components/Timer.vue';
+
+let showTaskText = ref("Add new task");
+let showNewTask = false;
 
 let tasks = reactive([{
     id: 1,
@@ -56,6 +59,17 @@ function deleteTask(id) {
   tasks.splice(index, 1);
 }
 
+function showNewTaskToggle() {
+    showNewTask = !showNewTask;
+    if(showNewTask) {
+        showTaskText.value = "Hide form";
+        // add padding and lower border
+    } else {
+        showTaskText.value = "Add new task";
+        // remove padding and lower border   
+    }
+
+}
 </script>
 
 <template>
@@ -63,20 +77,25 @@ function deleteTask(id) {
     <div id="info-block">
       <h1>Taskadore</h1>
       <Timer class="timer" />
-      <NewTask @addTask="addTask" />
+      <button class="action-btn" @click="showNewTaskToggle()">{{ showTaskText }}</button>
     </div>
-    
+    <div id="new-task-block">
+      <NewTask v-bind:showNewTask="showNewTask" @addTask="addTask" />
+    </div>
     <Task v-for="task in tasks" :key="task.id" :title="task.title" :description="task.description" :value="task.value" @delete="deleteTask(task.id)" />
   </div>
 </template>
 
 <style>
-  #info-block {
+  #info-block, #new-task-block {
     grid-column-start: 1;
     grid-column-end: 4;
     padding: 1em;
     display: flex;
     flex-wrap: wrap;
+  }
+
+  #info-block {
     justify-content: space-between;
   }
 
@@ -86,6 +105,17 @@ function deleteTask(id) {
 
   #info-block div {
     flex: 0 0 50%;
+  }
+
+  #info-block button {
+    align-self: flex-end;
+  }
+
+  #new-task-block {
+    border-top: 1px solid #d4d4d4;
+    border-bottom: 1px solid #d4d4d4;
+    justify-content: space-around;
+    grid-row-start: 2;
   }
 
   .action-btn {

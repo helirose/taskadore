@@ -1,15 +1,19 @@
 <script setup>
-import { ref } from 'vue'
+import { reactive, watch, ref } from 'vue'
+
+defineProps({
+    showNewTask: Boolean
+});
 
 const emit = defineEmits('addTask');
-var showNewTask = ref(false);
-var showTaskText = ref("Add new task");
 
-const form = {
+let atZero = true;
+
+let form = reactive({
   title: '',
   description: '',
   value: 0
-}
+});
 
 function addTask() {
     emit('addTask', form);
@@ -19,20 +23,28 @@ function addTask() {
     form.value = 0;
 }
 
-function showNewTaskToggle() {
-    showNewTask.value = !showNewTask.value;
-    if(showNewTask.value) {
-        showTaskText.value = "Hide form";
-    } else {
-        showTaskText.value = "Add new task";
-    }
-
+function increment() {
+    form.value++;
 }
+
+function decrement() {
+    form.value--;
+}
+
+watch(
+    () => form.value,
+    (newValue) => {
+    if(newValue == 0) {
+        atZero = true;
+    } else {
+        atZero = false;
+    }
+});
+
 </script>
 
 <template>
     <div>
-        <button class="action-btn" @click="showNewTaskToggle()">{{ showTaskText }}</button>
         <transition>
             <form v-if="showNewTask" class="addTask" v-on:submit.prevent="addTask()">
                 <span>
@@ -46,9 +58,9 @@ function showNewTaskToggle() {
                 <span>
                     <label for="value">Value</label>
                     <div class="value-control">
-                        <button aria-label="increment">&#x25B2;</button>
+                        <button type="button" @click="increment()" aria-label="increment">&#x25B2;</button>
                         <input id="value" name="value" v-model="form.value" type="number" autocomplete="off" />
-                        <button aria-label="decrement">&#x25BC;</button>
+                        <button type="button" @click="decrement()" aria-label="decrement" :disabled="atZero">&#x25BC;</button>
                     </div>
                 </span>
                 <input class="action-btn" type="submit" value="Add new task">
@@ -64,12 +76,8 @@ function showNewTaskToggle() {
     padding: 0.5em;
 }
 
-/* .fadeIn {
-    transition: opacity 1s ease-in;
-} */
-
 .v-enter-active, .v-leave-active {
-  transition: opacity 1s ease;
+  transition: opacity 0.5s ease;
 }
 
 .v-enter-from, .v-leave-to {
@@ -138,40 +146,6 @@ function showNewTaskToggle() {
     border-top: 1px solid #9c9c9c;
     border-bottom: 1px solid #9c9c9c;
 }
-
-/* .addTask input, .addTask input:focus {
-    -webkit-appearance: none;
-    -ms-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    background: none;
-    outline: none;
-    box-shadow: none;
-    border: none;
-    width: 100%;
-}
-
-.addTask input#title {
-    font-size: 1.2em;
-    border-bottom: 1px solid #d4d4d4;
-    font-weight: 600;
-    padding: 0.5em 0 1em 0;
-    margin: 0;
-}
-
-.addTask input#description {
-    border-bottom: 1px solid #d4d4d4;
-    padding: 1em 0;
-    margin: 0;
-    font-size: 1em;
-}
-
-.addTask input#value {
-    text-align: right;
-    font-size: 1em;
-    padding: 1em 0;
-    margin: 0;
-} */
 
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,

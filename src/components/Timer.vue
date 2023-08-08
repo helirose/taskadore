@@ -17,8 +17,6 @@ function startTimer() {
             seconds.value--;
         }
         
-        //let delta = Date.now() - start;
-        //clock.value = Math.floor(delta / 1000);
     }, 1000);
 }
 
