@@ -12,8 +12,11 @@ defineProps({
     <div class="taskCard">
         <h2>{{ title }}</h2>
         <p>{{ description }}</p>
-        <p>{{ value }}</p>
+        <div class="pomodoro">
+            <p><strong>{{ value }}</strong> pomodoros</p>
+        </div>
         <div class="buttons">
+            <button class="action-btn" @click="$emit('complete')">Complete</button>
             <button class="action-btn" @click="$emit('edit')">Edit</button>
             <button class="action-btn" @click="$emit('delete')">Delete</button>
         </div>
@@ -45,15 +48,17 @@ defineProps({
     margin: 0;
 }
 
-.taskCard p:nth-of-type(2) {
-    text-align: right;
+.taskCard .pomodoro p {
     font-size: 1em;
     padding: 1em 0;
     margin: 0;
 }
 
-.buttons {
+.pomodoro {
     margin-top: auto;
+}
+
+.buttons {
     margin-bottom: 0;
 }
 

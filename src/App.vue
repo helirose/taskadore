@@ -45,6 +45,8 @@ let tasks = reactive([{
   }
 ]);
 
+let completedTasks = reactive([]);
+
 function addTask(task) {
   tasks.push({
     id: task.id,
@@ -57,6 +59,13 @@ function addTask(task) {
 function deleteTask(id) {
   let index = tasks.findIndex(task => task.id == id);
   tasks.splice(index, 1);
+}
+
+function completeTask(completedTask) {
+  let index = tasks.findIndex(task => task.id == completedTask.id);
+  tasks.splice(index, 1);
+
+  completedTasks.push(completedTask);
 }
 
 function showNewTaskToggle() {
@@ -82,7 +91,7 @@ function showNewTaskToggle() {
     <div id="new-task-block">
       <NewTask v-bind:showNewTask="showNewTask" @addTask="addTask" />
     </div>
-    <Task v-for="task in tasks" :key="task.id" :title="task.title" :description="task.description" :value="task.value" @delete="deleteTask(task.id)" />
+    <Task v-for="task in tasks" :key="task.id" :title="task.title" :description="task.description" :value="task.value" @delete="deleteTask(task.id)" @complete="completeTask(this)" />
   </div>
 </template>
 
