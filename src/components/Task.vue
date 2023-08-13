@@ -1,24 +1,28 @@
 <script setup>
+import { computed, toRef, ref, reactive, watch } from 'vue';
 
-defineProps({
+const props = defineProps({
   title: String,
   description: String,
   value: toString(Number),
-})
+  completed: Boolean,
+  filterCompleted: Boolean,
+});
 
 </script>
 
 <template>
-    <div class="taskCard">
-        <h2>{{ title }}</h2>
+    <div class="taskCard" :class="{complete: this.completed, filter: this.completed && this.filterCompleted}">
+        <h2><span v-if="this.completed">Completed: </span>{{ title }}</h2>
         <p>{{ description }}</p>
-        <div class="pomodoro">
+        <div v-if="!this.completed" class="pomodoro">
             <p><strong>{{ value }}</strong> pomodoros</p>
         </div>
         <div class="buttons">
-            <button class="action-btn" @click="$emit('complete')">Complete</button>
-            <button class="action-btn" @click="$emit('edit')">Edit</button>
-            <button class="action-btn" @click="$emit('delete')">Delete</button>
+            <button v-if="!this.completed" class="action-btn" @click="$emit('complete')">Complete</button>
+            <button v-if="!this.completed" class="action-btn" @click="$emit('edit')">Edit</button>
+            <button v-if="!this.completed" class="action-btn" @click="$emit('delete')">Delete</button>
+            <button v-if="this.completed" class="action-btn" @click="$emit('incomplete')">Mark incomplete</button>
         </div>
     </div>
 </template>
@@ -62,6 +66,13 @@ defineProps({
     margin-bottom: 0;
 }
 
+.complete {
+    opacity: 0.5;
+}
+
+.filter {
+    display: none;
+}
 
 
 </style>

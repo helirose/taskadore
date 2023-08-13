@@ -1,8 +1,8 @@
 <script setup>
 import { reactive, watch, ref } from 'vue'
 
-defineProps({
-    showNewTask: Boolean
+const props = defineProps({
+    showNewTask: Boolean,
 });
 
 const emit = defineEmits('addTask');

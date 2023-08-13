@@ -1,5 +1,5 @@
 <script setup>
-import { ref, reactive } from 'vue';
+import { ref, reactive, computed } from 'vue';
 import Task from './components/Task.vue';
 import NewTask from './components/NewTask.vue';
 import Timer from './components/Timer.vue';
@@ -12,47 +12,58 @@ let tasks = reactive([{
     title: "Task 1",
     description: "The first task to do some stuff",
     value: 2,
+    completed: false,
   },
   {
     id: 2,
     title: "Task 2",
     description: "The second task to do some other stuff",
     value: 4,
+    completed: false,
   },
   {
     id: 3,
     title: "Task 3",
     description: "The third task to do some even more random other stuff",
     value: 1,
+    completed: false,
   },
   {
     id: 4,
     title: "Task 4",
     description: "The fourth task to do some stuff",
     value: 3,
+    completed: false,
   },
   {
     id: 5,
     title: "Task 5",
     description: "The fifth task to do some other stuff",
     value: 2,
+    completed: false,
   },
   {
     id: 6,
     title: "Task 6",
     description: "The sixth task to do some even more random other stuff",
     value: 1,
+    completed: false,
   }
 ]);
 
-let completedTasks = reactive([]);
+const filters = ref([]);
+
+let filterCompleted = computed(() => {
+  return (filters.value.includes("filterCompleted")) ? true : false;
+});
 
 function addTask(task) {
   tasks.push({
     id: task.id,
     title: task.title,
     description: task.description,
-    value: task.value
+    value: task.value,
+    completed: false,
   });
 }
 
@@ -62,10 +73,9 @@ function deleteTask(id) {
 }
 
 function completeTask(completedTask) {
+  completedTask.completed = true;
   let index = tasks.findIndex(task => task.id == completedTask.id);
-  tasks.splice(index, 1);
-
-  completedTasks.push(completedTask);
+  tasks.push(tasks.splice(index, 1)[0]);
 }
 
 function showNewTaskToggle() {
@@ -77,8 +87,11 @@ function showNewTaskToggle() {
         showTaskText.value = "Add new task";
         // remove padding and lower border   
     }
-
 }
+
+function check(event) {
+}
+
 </script>
 
 <template>
@@ -91,7 +104,14 @@ function showNewTaskToggle() {
     <div id="new-task-block">
       <NewTask v-bind:showNewTask="showNewTask" @addTask="addTask" />
     </div>
-    <Task v-for="task in tasks" :key="task.id" :title="task.title" :description="task.description" :value="task.value" @delete="deleteTask(task.id)" @complete="completeTask(this)" />
+    <div id="task-actions">
+      <form>
+        Filter:
+        <label for="filterCompleted">Hide completed</label>
+        <input name="filterCompleted" v-model="filters" type="checkbox" value="filterCompleted" @change="check($event)" />
+      </form>
+    </div>
+    <Task v-for="task in tasks" :key="task.id" :title="task.title" :description="task.description" :value="task.value" :completed="task.completed" :filterCompleted="filterCompleted" @delete="deleteTask(task.id)" @complete="completeTask(task)" />
   </div>
 </template>
 
@@ -125,6 +145,16 @@ function showNewTaskToggle() {
     border-bottom: 1px solid #d4d4d4;
     justify-content: space-around;
     grid-row-start: 2;
+    grid-column-start: 1;
+    grid-column-end: 4;
+  }
+
+  #task-actions {
+    grid-row-start: 3;
+    grid-row-end: 4;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    text-align: right;
   }
 
   .action-btn {
