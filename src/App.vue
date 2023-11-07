@@ -95,9 +95,17 @@ function check(event) {
 </script>
 
 <template>
+  <header>
+    <span class="logo">Taskadore</span>
+    <nav>
+        <ul>
+          <li>Login</li>
+        </ul>
+      </nav>
+  </header>
   <div id="grid">
     <div id="info-block">
-      <h1>Taskadore</h1>
+      <h1>Timer</h1>
       <Timer class="timer" />
       <button class="action-btn" @click="showNewTaskToggle()">{{ showTaskText }}</button>
     </div>
@@ -106,8 +114,7 @@ function check(event) {
     </div>
     <div id="task-actions">
       <form>
-        Filter:
-        <label for="filterCompleted">Hide completed</label>
+        <label for="filterCompleted">Hide completed </label>
         <input name="filterCompleted" v-model="filters" type="checkbox" value="filterCompleted" @change="check($event)" />
       </form>
     </div>
@@ -116,12 +123,38 @@ function check(event) {
 </template>
 
 <style>
+  header {
+    width: 100%;
+    padding: 10px;
+    background: #0066CC;
+    box-shadow: 5px 5px 10px #191b22;
+    color: #000000;
+    margin-bottom: 1em;
+    display: flex;
+  }
+
+  header span {
+    flex: 0 0 50%;
+  }
+
+  nav {
+    flex: 1 0 50%;
+    text-align: right;
+  }
+
+  nav ul, nav ul li {
+    margin: 0;
+    text-indent: 0;
+    list-style-type: none;
+  }
+  
   #info-block, #new-task-block {
     grid-column-start: 1;
     grid-column-end: 4;
     padding: 1em;
     display: flex;
     flex-wrap: wrap;
+    color: #ffffff;
   }
 
   #info-block {
@@ -141,8 +174,8 @@ function check(event) {
   }
 
   #new-task-block {
-    border-top: 1px solid #d4d4d4;
-    border-bottom: 1px solid #d4d4d4;
+    border-top: 1px solid #191b22;
+    border-bottom: 1px solid #191b22;
     justify-content: space-around;
     grid-row-start: 2;
     grid-column-start: 1;
@@ -165,5 +198,5 @@ function check(event) {
     border-color: #9c9c9c;
     border-radius: 2px;
   }
-
+  
 </style>

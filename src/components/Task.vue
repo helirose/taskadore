@@ -30,6 +30,7 @@ const props = defineProps({
 <style scoped>
 .taskCard {
     background: #fbfbfb;
+    border: 1px solid #191b22;
     color: #303030;
     text-align: left;
     padding: 1em;
@@ -73,6 +74,8 @@ const props = defineProps({
 .filter {
     display: none;
 }
+
+
 
 
 </style>
