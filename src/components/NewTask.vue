@@ -45,27 +45,25 @@ watch(
 
 <template>
     <div>
-        <transition>
-            <form v-if="showNewTask" class="addTask" v-on:submit.prevent="addTask()">
-                <span>
-                    <label for="title">Title</label>
-                    <input id="title" name="title" v-model="form.title" type="text" autocomplete="off" />
-                </span>
-                <span>
-                    <label for="description">Description</label>
-                    <input id="description" name="description" v-model="form.description" type="text" autocomplete="off" />
-                </span>
-                <span>
-                    <label for="value">Value</label>
-                    <div class="value-control">
-                        <button type="button" @click="increment()" aria-label="increment">&#x25B2;</button>
-                        <input id="value" name="value" v-model="form.value" type="number" autocomplete="off" />
-                        <button type="button" @click="decrement()" aria-label="decrement" :disabled="atZero">&#x25BC;</button>
-                    </div>
-                </span>
-                <input class="action-btn" type="submit" value="Add new task">
-            </form>
-        </transition>
+        <form v-if="showNewTask" class="addTask" v-on:submit.prevent="addTask()">
+            <span>
+                <label for="title">Title</label>
+                <input id="title" name="title" v-model="form.title" type="text" autocomplete="off" />
+            </span>
+            <span>
+                <label for="description">Description</label>
+                <input id="description" name="description" v-model="form.description" type="text" autocomplete="off" />
+            </span>
+            <span>
+                <label for="value">Value</label>
+                <div class="value-control">
+                    <button type="button" @click="increment()" aria-label="increment">&#x25B2;</button>
+                    <input id="value" name="value" v-model="form.value" type="number" autocomplete="off" />
+                    <button type="button" @click="decrement()" aria-label="decrement" :disabled="atZero">&#x25BC;</button>
+                </div>
+            </span>
+            <input class="action-btn" type="submit" value="Add new task">
+        </form>
     </div>
 </template>
 
@@ -74,14 +72,6 @@ watch(
 .addTask label {
     display: inline-block;
     padding: 0.5em;
-}
-
-.v-enter-active, .v-leave-active {
-  transition: opacity 0.5s ease;
-}
-
-.v-enter-from, .v-leave-to {
-  opacity: 0;
 }
 
 .addTask {

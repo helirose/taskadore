@@ -19,10 +19,12 @@ const props = defineProps({
             <p><strong>{{ value }}</strong> pomodoros</p>
         </div>
         <div class="buttons">
-            <button v-if="!this.completed" class="action-btn" @click="$emit('complete')">Complete</button>
-            <button v-if="!this.completed" class="action-btn" @click="$emit('edit')">Edit</button>
-            <button v-if="!this.completed" class="action-btn" @click="$emit('delete')">Delete</button>
-            <button v-if="this.completed" class="action-btn" @click="$emit('incomplete')">Mark incomplete</button>
+            <ul>
+                <li><button v-if="!this.completed" class="action-btn" @click="$emit('complete')">Complete</button></li>
+                <li><button v-if="!this.completed" class="action-btn" @click="$emit('edit')">Edit</button></li>
+                <li><button v-if="!this.completed" class="action-btn" @click="$emit('delete')">Delete</button></li>
+                <li><button v-if="this.completed" class="action-btn" @click="$emit('incomplete')">Mark incomplete</button></li>
+            </ul>
         </div>
     </div>
 </template>
@@ -36,7 +38,21 @@ const props = defineProps({
     padding: 1em;
     display: flex;
     flex-direction: column;
-    flex: 1;
+    flex: 1 1 100%;
+}
+
+@media screen and (min-width: 900px) {
+    .taskCard {
+        flex: 1 1 48%;
+        max-width: 48%;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    .taskCard {
+        flex: 1 1 32%;
+        max-width: 32%;
+    }
 }
 
 .taskCard h2 {
@@ -48,7 +64,6 @@ const props = defineProps({
 }
 
 .taskCard p:nth-of-type(1) {
-    border-bottom: 1px solid #d4d4d4;
     padding: 1em 0;
     margin: 0;
 }
@@ -60,11 +75,16 @@ const props = defineProps({
 }
 
 .pomodoro {
+    border-top: 1px solid #d4d4d4;
     margin-top: auto;
 }
 
 .buttons {
     margin-bottom: 0;
+}
+
+.buttons ul li {
+    margin: 0.5em 0.2em 0.5em 0;
 }
 
 .complete {

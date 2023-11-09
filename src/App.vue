@@ -78,6 +78,12 @@ function completeTask(completedTask) {
   tasks.push(tasks.splice(index, 1)[0]);
 }
 
+function incompleteTask(incompletedTask) {
+  incompletedTask.completed = false;
+  let index = tasks.findIndex(task => task.id == incompletedTask.id);
+  tasks.unshift(tasks.splice(index, 1)[0]);
+}
+
 function showNewTaskToggle() {
     showNewTask = !showNewTask;
     if(showNewTask) {
@@ -109,16 +115,20 @@ function check(event) {
       <Timer class="timer" />
       <button class="action-btn" @click="showNewTaskToggle()">{{ showTaskText }}</button>
     </div>
-    <div id="new-task-block">
+    <div id="new-task-block" v-if="showNewTask">
       <NewTask v-bind:showNewTask="showNewTask" @addTask="addTask" />
     </div>
+    <span class="empty-cell empty-cell-left"></span>
     <div id="task-actions">
       <form>
         <label for="filterCompleted">Hide completed </label>
         <input name="filterCompleted" v-model="filters" type="checkbox" value="filterCompleted" @change="check($event)" />
       </form>
     </div>
-    <Task v-for="task in tasks" :key="task.id" :title="task.title" :description="task.description" :value="task.value" :completed="task.completed" :filterCompleted="filterCompleted" @delete="deleteTask(task.id)" @complete="completeTask(task)" />
+    <span class="empty-cell empty-cell-right"></span>
+    <div id="task-list">
+      <Task v-for="task in tasks" :key="task.id" :title="task.title" :description="task.description" :value="task.value" :completed="task.completed" :filterCompleted="filterCompleted" @delete="deleteTask(task.id)" @complete="completeTask(task)" @incomplete="incompleteTask(task)" />
+    </div>
   </div>
 </template>
 
@@ -126,11 +136,14 @@ function check(event) {
   header {
     width: 100%;
     padding: 10px;
-    background: #0066CC;
-    box-shadow: 5px 5px 10px #191b22;
     color: #000000;
     margin-bottom: 1em;
     display: flex;
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   }
 
   header span {
@@ -139,6 +152,7 @@ function check(event) {
 
   nav {
     flex: 1 0 50%;
+    padding-right: 1em;
     text-align: right;
   }
 
@@ -149,9 +163,8 @@ function check(event) {
   }
   
   #info-block, #new-task-block {
-    grid-column-start: 1;
-    grid-column-end: 4;
-    padding: 1em;
+    grid-column-start: 2;
+    grid-column-end: 5;
     display: flex;
     flex-wrap: wrap;
     color: #ffffff;
@@ -159,6 +172,8 @@ function check(event) {
 
   #info-block {
     justify-content: space-between;
+    grid-row-start: 2;
+    grid-row-end: 3;
   }
 
   #info-block h1 {
@@ -174,25 +189,38 @@ function check(event) {
   }
 
   #new-task-block {
-    border-top: 1px solid #191b22;
-    border-bottom: 1px solid #191b22;
     justify-content: space-around;
-    grid-row-start: 2;
-    grid-column-start: 1;
-    grid-column-end: 4;
+    grid-row-start: 3;
+    grid-row-end: 4;
+    grid-column-start: 2;
+    grid-column-end: 5;
   }
 
   #task-actions {
-    grid-row-start: 3;
-    grid-row-end: 4;
-    grid-column-start: 1;
-    grid-column-end: 4;
+    grid-row-start: 4;
+    grid-row-end: 5;
+    grid-column-start: 2;
+    grid-column-end: 5;
     text-align: right;
+    padding: 1em;
+    background: #667755;
+  }
+
+  #task-list {
+    grid-row-start: 5;
+    grid-row-end: 6;
+    grid-column-start: 2;
+    grid-column-end: 5;
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 1em;
+    row-gap: 1em;
+    justify-content: space-between;
+    align-items: stretch;
   }
 
   .action-btn {
     padding: 0.5em;
-    margin: 1em 1em 1em 0;
     border-style: solid;
     border-width: 1px;
     border-color: #9c9c9c;

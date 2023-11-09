@@ -69,13 +69,18 @@ function resetTimer() {
 
 <template>
     <div>
-        <button class="timer-tab" @click="setTime($event)" value="pomodoro">Pomodoro</button>
-        <button class="timer-tab" @click="setTime($event)" value="short">Short Break</button>
-        <button class="timer-tab" @click="setTime($event)" value="long">Long Break</button>
+        <ul>
+            <li><button class="timer-tab" @click="setTime($event)" value="pomodoro">Pomodoro</button></li>
+            <li><button class="timer-tab" @click="setTime($event)" value="short">Short Break</button></li>
+            <li><button class="timer-tab" @click="setTime($event)" value="long">Long Break</button></li>
+        </ul>
         <span class="clock">{{ displayHours }}:{{ displayMinutes }}:{{ displaySeconds }}</span>
-        <button class="action-btn" @click="startTimer()">Start</button>
-        <button class="action-btn" @click="stopTimer()">Stop</button>
-        <button class="action-btn" @click="resetTimer()">Reset</button>
+        <ul>
+            <li><button class="action-btn" @click="startTimer()">Start</button></li>
+            <li><button class="action-btn" @click="stopTimer()">Stop</button></li>
+            <li><button class="action-btn" @click="resetTimer()">Reset</button></li>
+        </ul>
+       
     </div>
 </template>
 
@@ -94,6 +99,10 @@ function resetTimer() {
 .timer-action {
     padding: 0.5em;
     margin: 1em 1em 1em 0;
+}
+
+.action-btn {
+    margin-right: 0.5em;
 }
 
 </style>
