@@ -1,7 +1,7 @@
-import { createApp } from 'vue'
-import './reset.css'
-import './style.css'
-import App from './App.vue'
+import { createApp } from 'vue';
+import './reset.css';
+import './style.css';
+import App from './App.vue';
 
 // Firebase
 import { initializeApp } from "firebase/app";
@@ -23,4 +23,4 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
-createApp(App).mount('#app')
+createApp(App).mount('#app');
