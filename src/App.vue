@@ -105,7 +105,7 @@ function check(event) {
     <span class="logo">Taskadore</span>
     <nav>
         <ul>
-          <li>Login</li>
+          <li><button>Login</button></li>
         </ul>
       </nav>
   </header>

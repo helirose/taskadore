@@ -2,6 +2,8 @@ import { createApp } from 'vue';
 import './reset.css';
 import './style.css';
 import App from './App.vue';
+import * as firebaseui from 'firebaseui';
+import 'firebaseui/dist/firebaseui.css';
 
 // Firebase
 import { initializeApp } from "firebase/app";
