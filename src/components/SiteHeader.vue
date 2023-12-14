@@ -4,7 +4,7 @@
 
 <template>
     <header>
-        <span class="logo">Taskadore</span>
+        <span class="logo"><router-link to="/">Taskadore</router-link></span>
         <nav>
             <ul>
             <li><button>Login</button></li>
