@@ -1,21 +1,11 @@
 body {
   font-family: tahoma;
   background: #667755;
+  color: #000000;
 }
 
 #app {
   width: 100%;
-} 
-
-#grid {
-  width: 80%;
-  display: grid;
-  grid-template-columns: 1em repeat(3, 1fr) 1em;
-  grid-template-rows: 0 repeat(4, auto) 0;
-  column-gap: 0;
-  row-gap: 1em;
-  margin: 1em auto;
-  background: #FFFFFF;
 }
 
 .empty-cell {
