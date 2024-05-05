@@ -69,7 +69,7 @@ function addTask(task) {
 
 function deleteTask(id) {
   let index = tasks.findIndex(task => task.id == id);
-  tasks.splice(index, 1);
+  tasks.splice(index, 1)[0];
 }
 
 function completeTask(completedTask) {
@@ -175,7 +175,7 @@ function check(event) {
     flex-wrap: wrap;
     column-gap: 1em;
     row-gap: 1em;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: stretch;
   }
 
